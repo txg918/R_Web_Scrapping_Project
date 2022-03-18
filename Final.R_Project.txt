@@ -1,0 +1,99 @@
+
+R version 4.0.2 (2020-06-22) -- "Taking Off Again"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[R.app GUI 1.72 (7847) x86_64-apple-darwin17.0]
+
+[History restored from /Users/jeu/.Rapp.history]
+
+> library(rvest)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> link = "https://www.imdb.com/search/title/?genres=action&sort=user_rating,desc&title_type=feature&num_votes=25000,&pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=5aab685f-35eb-40f3-95f7-c53f09d542c3&pf_rd_r=S0AWMPCPBPTP0WDT0GED&pf_rd_s=right-6&pf_rd_t=15506&pf_rd_i=top&ref_=chttp_gnr_1"
+> page = read_html(link)
+> name = page %>% html_nodes(".lister-item-header a") %>% html_text()
+> rating = page %>% html_nodes(".ratings-imdb-rating strong") %>% html_text()
+> summary = page %>% html_nodes(".ratings-bar+ .text-muted") %>% html_text()
+> year = page %>% html_nodes(".text-muted.unbold") %>% html_text()
+> summary
+ [1] "\nWhen the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice."                                               
+ [2] "\nIn a desolate war zone where screams of the innocent echo, seven Maroon Berets will dance with death on the very line between disaster and valor."                                                                                           
+ [3] "\nGandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring."                                                                                          
+ [4] "\nThe story of PVC awardee Indian soldier Capt. Vikram Batra, who shot to fame and became a household name during the Kargil War in 1999."                                                                                                     
+ [5] "\nA meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron."                                                                                    
+ [6] "\nA thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster."                
+ [7] "\nWhile Frodo and Sam edge closer to Mordor with the help of the shifty Gollum, the divided fellowship makes a stand against Sauron's new ally, Saruman, and his hordes of Isengard."                                                          
+ [8] "\nWhen a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence."                                                
+ [9] "\nAfter the Rebels are brutally overpowered by the Empire on the ice planet Hoth, Luke Skywalker begins Jedi training with Yoda, while his friends are pursued across the galaxy by Darth Vader and bounty hunter Boba Fett."                  
+[10] "\nA poor village under attack by bandits recruits seven unemployed samurai to help them defend themselves."                                                                                                                                    
+[11] "\nThe teenage son of a farmer from an underprivileged caste kills a rich, upper caste landlord. Will the farmer, a loving father and a pacifist by heart, be able to save his hot-blooded son is the rest of the story."                       
+[12] "\nWith Spider-Man's identity now revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear, forcing Peter to discover what it truly means to be Spider-Man."                     
+[13] "\n12-year-old Mathilda is reluctantly taken in by Léon, a professional assassin, after her family is murdered. An unusual relationship forms as she becomes his protégée and learns the assassin's trade."                                     
+[14] "\nA cyborg, identical to the one who failed to kill Sarah Connor, must now protect her ten-year-old son John from a more advanced and powerful cyborg."                                                                                        
+[15] "\nLuke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader."
+[16] "\nWhen a ronin requesting seppuku at a feudal lord's palace is told of the brutal suicide of another ronin who previously visited, he reveals how their pasts are intertwined - and in doing so challenges the clan's integrity."              
+[17] "\nIn the 1970s, a gangster goes undercover as a slave to assassinate the owner of a notorious gold mine."                                                                                                                                      
+[18] "\nThe Avengers and their allies must be willing to sacrifice all in an attempt to defeat the powerful Thanos before his blitz of devastation and ruin puts an end to the universe."                                                            
+[19] "\nA former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery."                                                                                                           
+[20] "\nIndian army special forces execute a covert operation, avenging the killing of fellow army men at their base by a terrorist group."                                                                                                          
+[21] "\nVikram, a no-nonsense police officer, accompanied by Simon, his partner, is on the hunt to capture Vedha, a smuggler and a murderer. Vedha tries to change Vikram's life, which leads to a conflict."                                        
+[22] "\nFormer wrestler Mahavir Singh Phogat and his two wrestler daughters struggle towards glory at the Commonwealth Games in the face of societal oppression."                                                                                    
+[23] "\nTeen Miles Morales becomes the Spider-Man of his universe, and must join with five spider-powered individuals from other dimensions to stop a threat for all realities."                                                                     
+[24] "\nAfter the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe."        
+[25] "\nA case of mistaken identity embroils an escaped convict in a fight against a large corporation intent on seizing a village's land."                                                                                                          
+[26] "\nA rock star must overcome his psychological inhibitions to seek revenge for his parents' death."                                                                                                                                             
+[27] "\nWhen the Riddler, a sadistic serial killer, begins murdering key political figures in Gotham, Batman is forced to investigate the city's hidden corruption and question his family's involvement."                                           
+[28] "\nEight years after the Joker's reign of anarchy, Batman, with the help of the enigmatic Catwoman, is forced from his exile to save Gotham City from the brutal guerrilla terrorist Bane."                                                     
+[29] "\nAfter being kidnapped and imprisoned for fifteen years, Oh Dae-Su is released, only to find that he must find his captor in five days."                                                                                                      
+[30] "\nOn a journey to find the cure for a Tatarigami's curse, Ashitaka finds himself in the middle of a war between the forest gods and Tatara, a mining colony. In this quest he also meets San, the Mononoke Hime."                              
+[31] "\nFifty-seven years after surviving an apocalyptic attack aboard her space vessel by merciless space creatures, Officer Ripley awakens from hyper-sleep and tries to warn anyone who will listen about the predators."                         
+[32] "\nIn 1936, archaeologist and adventurer Indiana Jones is hired by the U.S. government to find the Ark of the Covenant before Adolf Hitler's Nazis can obtain its awesome powers."                                                              
+[33] "\nApril 6th, 1917. As an infantry battalion assembles to wage war deep in enemy territory, two soldiers are assigned to race against time and deliver a message that will stop 1,600 men from walking straight into a deadly trap."            
+[34] "\nWhen Shiva, the son of Bahubali, learns about his heritage, he begins to look for answers. His story is juxtaposed with past events that unfolded in the Mahishmati Kingdom."                                                                
+[35] "\nWhen a classical dancer's suspecting wife sets an investigator behind him, a series of violent events are triggered, revealing his real identity and connection to a darker world."                                                          
+[36] "\nAn army captain is on a mission to track down and destroy a terrorist gang and deactivate the sleeper cells under its command."                                                                                                              
+[37] "\nAfter his family was brutally murdered and his sister turned into a demon, Tanjiro Kamado's journey as a demon slayer began. Tanjiro and his comrades embark on a new mission aboard the Mugen Train, on track to despair."                  
+[38] "\nAfter training with his mentor, Batman begins his fight to free crime-ridden Gotham City from corruption."                                                                                                                                   
+[39] "\nA group of high-end professional thieves start to feel the heat from the LAPD when they unknowingly leave a clue at their latest heist."                                                                                                     
+[40] "\nIn 1938, after his father Professor Henry Jones, Sr. goes missing while pursuing the Holy Grail, Professor Henry \"Indiana\" Jones, Jr. finds himself up against Adolf Hitler's Nazis again to stop them from obtaining its powers."         
+[41] "\nAn NYPD officer tries to save his wife and several others taken hostage by German terrorists during a Christmas party at the Nakatomi Plaza in Los Angeles."                                                                                 
+[42] "\nAfter a daring mission to rescue Han Solo from Jabba the Hutt, the Rebels dispatch to Endor to destroy the second Death Star. Meanwhile, Luke struggles to help Darth Vader back from the dark side without falling into the Emperor's trap."
+[43] "\nAn unusual event creates a lightning which in turns gives superhuman abilies to an ambitious tailor ,whose responsibility is now to protect his home village from the evil plans of the antagonist."                                         
+[44] "\nA clash between Sultan and Shahid Khan leads to the expulsion of Khan from Wasseypur, and ignites a deadly blood feud spanning three generations."                                                                                           
+[45] "\nThe efforts of the Pakistani security forces in their fight against terrorism and how the lives of security officials are affected. A retired security officer returns to save Pakistan from a major terrorist attack."                      
+[46] "\nThe story of Paan Singh Tomar, an Indian athlete and seven-time national steeplechase champion who becomes one of the most feared dacoits in Chambal Valley after his retirement."                                                           
+[47] "\nThe youngest son of an alcoholic former boxer returns home, where he's trained by his father for competition in a mixed martial arts tournament - a path that puts the fighter on a collision course with his estranged, older brother."     
+[48] "\nIn a future British tyranny, a shadowy freedom fighter, known only by the alias of \"V,\" plots to overthrow it with the help of a young woman."                                                                                             
+[49] "\nAfter awakening from a four-year coma, a former assassin wreaks vengeance on the team of assassins who betrayed her."                                                                                                                        
+[50] "\nEddy persuades his three pals to pool money for a vital poker game against a powerful local mobster, Hatchet Harry. Eddy loses, after which Harry gives him a week to pay back 500,000 pounds."                                              
+> movies = data.frame(name, year, summary, rating, stringsAsFactors = FALSE)
+> write.csv(movies, "movies.csv")
+> getwd()
+[1] "/Users/jeu"
+> write.csv(movies, "movies.csv")
+> video1603874137
