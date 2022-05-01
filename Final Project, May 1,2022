@@ -1,0 +1,54 @@
+#Interactive Median Household Income by County in Texas
+#API USED FOR TIDYCENSUS
+
+
+census_api_key("d2d8da385256fb1e804714b390df83bf4c8e9ad7", install = TRUE)
+Sys.getenv("CENSUS_API_KEY")
+
+library(tidycensus)
+library(ggiraph)
+library(tidyverse)
+library(patchwork)
+library(scales)
+install.packages("shiny")
+install.packages("leaflet")
+
+
+ v19 <- load_variables(2019, "acs1", cache = TRUE)
+
+tx_income <- get_acs(
+  geography = "county",
+  variables = "B19013_001",
+  state = "TX",
+  year = 2020,
+  geometry = TRUE
+) %>%
+  mutate(NAME = str_remove(NAME, " County, Texas"))
+
+tx_map <- ggplot(tx_income, aes(fill = estimate)) + 
+  geom_sf_interactive(aes(data_id = GEOID)) + 
+  scale_fill_distiller(palette = "Greens",
+                       direction = 1, 
+                       guide = "none") + 
+  theme_void()
+
+tx_plot <- ggplot(tx_income, aes(x = estimate, y = reorder(NAME, estimate), 
+                                 fill = estimate)) +
+  geom_errorbar(aes(xmin = estimate - moe, xmax = estimate + moe)) +
+  geom_point_interactive(color = "black", size = 4, shape = 21,
+                         aes(data_id = GEOID)) +
+  scale_fill_distiller(palette = "Greens", direction = 1,
+                       labels = label_dollar()) + 
+  scale_x_continuous(labels = label_dollar()) + 
+  labs(title = "Household income by county in Texas",
+       subtitle = "2016-2020 American Community Survey",
+       y = "",
+       x = "ACS estimate (bars represent margin of error)",
+       fill = "ACS estimate") + 
+  theme_minimal(base_size = 14)
+
+girafe(ggobj = tx_map + tx_plot, width_svg = 10, height_svg = 5) %>%
+  girafe_options(opts_hover(css = "fill:cyan;"))
+  
+  #END
+  #All data is sourced from Census
